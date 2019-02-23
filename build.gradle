@@ -1,0 +1,35 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.cliff'
+version = '0.0.1'
+sourceCompatibility = '1.8'
+//targetCompatibility = '1.8'   // Defines the minimum JVM version your code should run on, i.e. it determines 
+                                // the version of byte code the compiler generates
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    // for creating custom connection pools
+    implementation 'org.apache.commons:commons-pool2:2.6.1'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    // local dependencies for Sphinx, Java Speech API
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+// implementation       - (supersedes compile) — used for compilation and runtime
+// testImplementation   - test equivalent of implementation
+// compileOnly          - for deps that are necessary to compile your code but shouldn’t be part of the runtime classpath

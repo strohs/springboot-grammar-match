@@ -1,0 +1,101 @@
+#JSGF V1.0;
+grammar currency;
+ 
+public <currency> = <dollars> [and] <cents>       { this.$value = $dollars.$value + $cents.$value }
+                 	| (a|one) dollar <tdNum1to99> 	{ this.$value = "1." + $tdNum1to99.$value }
+                 	| <dollars>                     { this.$value = $dollars.$value }
+                 	| <cents>                       { this.$value = "0" + $cents.$value };
+
+<dollars>         = (one|a) (dollar|buck)      			{ this.$value = "1" }
+                 | <number> (dollars|dollar|bucks) 	{ this.$value = $number.$value };
+
+<cents>           = (one|a) cent                 	{ this.$value = ".01" }
+                 | <numbers2to9> cents          	{ this.$value = ".0" + $numbers2to9.$value   }
+                 | <numbers02to99> cents        	{ this.$value = "." + $numbers02to99.$value  };
+
+<numbers02to99>   = (zero|oh) <numbers2to9> 	{ this.$value = "0" + $numbers2to9.$value }
+                 | <teens>                 		{ this.$value = $teens.$value }
+                 | <tens>                  		{ this.$value = $tens.$value + "0" }
+                 | <tens> <numbers1to9>    		{ this.$value = $tens.$value + $numbers1to9.$value };
+
+<numbers1to99b>   = oh one                  	{ this.$value = "01" }
+                 | <numbers02to99>         	{ this.$value = $numbers02to99.$value };
+
+<number>      = <zeros> 					{ this.$value = $zeros.$value }
+             | <numbers1to99> 		{ this.$value = $numbers1to99.$value }
+             | <tenHundreds> 			{ this.$value = $tenHundreds.$value }
+             | <thousands> 				{ this.$value = $thousands.$value };
+
+<zeros>        = (zero|oh|nil|ought) 		{ this.$value = "0" };
+
+<ones_a>       = <numbers1to9> 	{ this.$value = $numbers1to9.$value }
+              | a             	{ this.$value = "1"};
+
+<teens>        = eleven   { this.$value ="11" }
+              | twelve    { this.$value ="12" }
+              | thirteen  { this.$value ="13" }
+              | fourteen  { this.$value ="14" }
+              | fifteen   { this.$value ="15" }
+              | sixteen   { this.$value ="16" }
+              | seventeen { this.$value ="17" }
+              | eighteen  { this.$value ="18" }
+              | nineteen  { this.$value ="19" };
+
+<tens>         = ten      { this.$value ="1" }
+              | twenty    { this.$value ="2" }
+              | thirty    { this.$value ="3" }
+              | forty     { this.$value ="4" }
+              | fifty     { this.$value ="5" }
+              | sixty     { this.$value ="6" }
+              | seventy   { this.$value ="7" }
+              | eighty    { this.$value ="8" }
+              | ninety    { this.$value ="9" };
+
+<tens20to90>   = twenty   { this.$value ="2" }
+              | thirty    { this.$value ="3" }
+              | forty     { this.$value ="4" }
+              | fifty     { this.$value ="5" }
+              | sixty     { this.$value ="6" }
+              | seventy   { this.$value ="7" }
+              | eighty    { this.$value ="8" }
+              | ninety    { this.$value ="9" };
+
+<numbers1to99> = <tens20to90> <numbers1to9> { this.$value = $tens20to90.$value + $numbers1to9.$value }
+              | <tens>                     	{ this.$value = $tens.$value + "0" }
+              | <teens>                    	{ this.$value = $teens.$value }
+              | <numbers1to9>              	{ this.$value = $numbers1to9.$value };
+
+<tdNum1to99>   = <tens20to90> <numbers1to9> { this.$value = $tens20to90.$value + $numbers1to9.$value }
+              | <tens>                     	{ this.$value = $tens.$value + "0" }
+              | <teens>                    	{ this.$value = $teens.$value }
+              | <numbers1to9>              	{ this.$value = "0" + $numbers1to9.$value };
+
+<tenHundreds>  = <numbers1to99> hundred [and] <tdNum1to99> 	{ this.$value = $numbers1to99.$value + $tdNum1to99.$value }
+              | a hundred [and] <tdNum1to99>              	{ this.$value = "1" + $tdNum1to99.$value }
+              | <numbers1to99> hundred                    	{ this.$value = $numbers1to99.$value + "00" }
+              | a hundred                                 	{ this.$value = "100" };
+
+<hundreds>    = <ones_a> hundred [and] <tdNum1to99> { this.$value = $ones_a.$value + $tdNum1to99.$value }
+              | <ones_a> hundred                   	{ this.$value = $ones_a.$value + "00" }
+              | <numbers1to99>                     	{ this.$value = $numbers1to99.$value }
+              | a                                 	{ this.$value = "1" };
+
+<andNum001to999> = <numbers1to9> hundred [and] <tdNum1to99> { this.$value = $numbers1to9.$value + $tdNum1to99.$value }
+                | <numbers1to9> hundred                    	{ this.$value = $numbers1to9.$value + "00" }
+                | [and] <tdNum1to99>                       	{ this.$value = "0" + $tdNum1to99.$value };
+
+
+<thousands>   = <hundreds> thousand                  	{ this.$value = $hundreds.$value + "000" }
+             	| <hundreds> thousand <andNum001to999> 	{ this.$value = $hundreds.$value + $andNum001to999.$value };
+
+<numbers2to9> = two   { this.$value ="2" }
+             | three { this.$value ="3" }
+             | four  { this.$value ="4" }
+             | five  { this.$value ="5" }
+             | six   { this.$value ="6" }
+             | seven { this.$value ="7" }
+             | eight { this.$value ="8" }
+             | nine  { this.$value ="9" };
+
+<numbers1to9> = one   				{ this.$value ="1" }
+             	| <numbers2to9> { this.$value = $numbers2to9.$value};

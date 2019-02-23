@@ -1,0 +1,158 @@
+#JSGF V1.0;
+grammar date;
+
+public <date> = <dayofmonth> <yr> {this.$value = $yr.$value + $dayofmonth.$value}
+								| <dayofmonth> 		{this.$value = $dayofmonth.$value };
+
+
+<dayofmonth> = (<month29> [the] <ordinal01to29> ) 	{ this.$value = $month29.$value + $ordinal01to29.$value }
+							| ( <month29> [the] <numbers01to29> ) { this.$value = $month29.$value + $numbers01to29.$value }
+							| ( <month30> [the] <ordinal01to30> ) { this.$value = $month30.$value + $ordinal01to30.$value }
+							| ( <month30> [the] <numbers01to30> ) { this.$value = $month30.$value + $numbers01to30.$value }
+							| ( <month31> [the] <ordinal01to31> ) { this.$value = $month31.$value + $ordinal01to31.$value }
+							| ( <month31> [the] <numbers01to31> ) { this.$value = $month31.$value + $numbers01to31.$value };
+
+<month29> = february 	{this.$value ="02"};
+
+<month30> = april 		{this.$value ="04"}
+         | june 		{this.$value ="06"}
+         | september 	{this.$value = "09"}
+         | november 	{this.$value ="11"};
+
+<month31> = january {this.$value ="01" }
+         | march 	{this.$value ="03" }
+         | may 		{this.$value ="05" }
+         | july 	{this.$value ="07" }
+         | august 	{this.$value ="08" }
+         | october 	{this.$value ="10" }
+         | december {this.$value ="12" };
+
+<yr> = ninety <numbers1to9> 								{ this.$value = "199" + $numbers1to9.$value }
+    | two thousand [and] <tdNum1to99> 			{ this.$value = "20" + $tdNum1to99.$value }
+    | two thousand (zero|oh) <numbers1to9>	{ this.$value = "20" + "0" + $numbers1to9.$value }
+    | two thousand 													{ this.$value = "2000" }
+    | <tdNum1to99> <numbers01to99> 					{ this.$value = $tdNum1to99.$value + $numbers01to99.$value };
+
+<ordinal2to9> = second	{ this.$value = "2" }
+             | third 		{ this.$value = "3" }
+             | fourth 	{ this.$value = "4" }
+             | fifth 		{ this.$value = "5" }
+             | sixth 		{ this.$value = "6" }
+             | seventh 	{ this.$value = "7" }
+             | eighth 	{ this.$value = "8" }
+             | ninth 		{ this.$value = "9" };
+
+<ordinal1to9> = first 			{ this.$value ="1" }
+             | <ordinal2to9> 	{ this.$value = $ordinal2to9.$value };
+
+<ordinal10to19> = tenth 		{ this.$value ="10" }
+               | eleventh 		{ this.$value ="11" }
+               | twelfth 		{ this.$value ="12" }
+               | thirteenth 	{ this.$value ="13" }
+               | fourteenth 	{ this.$value ="14" }
+               | fifteenth 		{ this.$value ="15" }
+               | sixteenth 		{ this.$value ="16" }
+               | seventeenth 	{ this.$value ="17" }
+               | eighteenth 	{ this.$value ="18" }
+               | nineteenth 	{ this.$value ="19" };
+
+
+<ordinal02to19> = <ordinal2to9> 	{ this.$value ="0" + $ordinal2to9.$value }
+               | <ordinal10to19> 	{ this.$value = $ordinal10to19.$value };
+
+<ordinal01to19> = first 					{ this.$value ="01" }
+               | <ordinal02to19> 	{ this.$value = $ordinal02to19.$value };
+
+<ordinal01to29> = <ordinal01to19> 		{ this.$value = $ordinal01to19.$value }
+               | twentieth 						{ this.$value ="20"  }
+               | twenty <ordinal1to9> { this.$value ="2" + $ordinal1to9.$value  };
+
+<ordinal01to30> = <ordinal01to29> { this.$value = $ordinal01to29.$value }
+               | thirtieth 				{ this.$value ="30" };
+
+<ordinal01to31> = <ordinal01to30> { this.$value = $ordinal01to30.$value }
+               | thirty first 		{ this.$value ="31" };
+
+
+<tdNum1to99> = <tens20to90> <numbers1to9>	{ this.$value = $tens20to90.$value + $numbers1to9.$value }
+               | <tens> 									{ this.$value = $tens.$value + "0" }
+               | <teens> 									{ this.$value = $teens.$value }
+               | <numbers1to9> 						{ this.$value = "0" + $numbers1to9.$value };
+
+
+<numbers01to99> = <numbers02to99> 				{ this.$value = $numbers02to99.$value }
+               | (zero|oh|nil|ought) one 	{ this.$value ="01" };
+
+<numbers02to99> = (zero|oh|nil|ought) <numbers2to9>	{ this.$value ="0" + $numbers2to9.$value }
+               | <teens> 														{ this.$value = $teens.$value }
+               | <tens> 														{ this.$value = $tens.$value + "0" }
+               | <tens> <numbers1to9> 							{ this.$value = $tens.$value + $numbers1to9.$value };
+
+<numbers1to9>   = one 			{ this.$value ="1" }
+               | <numbers2to9> 	{this.$value = $numbers2to9.$value };
+
+<numbers2to9>   = two 	{ this.$value ="2" }
+               | three 	{ this.$value ="3" }
+               | four 	{ this.$value ="4" }
+               | five 	{ this.$value ="5" }
+               | six 	{ this.$value ="6" }
+               | seven 	{ this.$value ="7" }
+               | eight 	{ this.$value ="8" }
+               | nine 	{ this.$value ="9" };
+
+<numbers10to19> = ten 			{ this.$value ="10" }
+               | eleven 		{ this.$value ="11" }
+               | twelve 		{ this.$value ="12" }
+               | thirteen 	{ this.$value ="13" }
+               | fourteen 	{ this.$value ="14" }
+               | fifteen 		{ this.$value ="15" }
+               | sixteen 		{ this.$value ="16" }
+               | seventeen	{ this.$value ="17" }
+               | eighteen 	{ this.$value ="18" }
+               | nineteen 	{ this.$value ="19" };
+
+
+<numbers02to19> = <numbers2to9>		{ this.$value = "0" + $numbers2to9.$value }
+               | <numbers10to19> 	{ this.$value = $numbers10to19.$value };
+
+<numbers01to19> = one 						{ this.$value = "01" }
+               | <numbers02to19>	{ this.$value = $numbers02to19.$value };
+
+<numbers01to29> = <numbers01to19>			{ this.$value = $numbers01to19.$value }
+               | twenty 							{ this.$value = "20" }
+               | twenty <numbers1to9>	{ this.$value ="2" + $numbers1to9.$value  };
+
+<numbers01to30> = <numbers01to29> 		{ this.$value = $numbers01to29.$value }
+               | thirty 							{ this.$value ="30" };
+
+<numbers01to31> = <numbers01to30> 		{ this.$value = $numbers01to30.$value }
+               | thirty one 					{ this.$value ="31" };
+
+<teens> = eleven 			{ this.$value = "11" }
+               | twelve 	{ this.$value ="12" }
+               | thirteen 	{ this.$value ="13" }
+               | fourteen 	{ this.$value ="14" }
+               | fifteen 	{ this.$value ="15" }
+               | sixteen 	{ this.$value ="16" }
+               | seventeen 	{ this.$value ="17" }
+               | eighteen 	{ this.$value ="18" }
+               | nineteen 	{ this.$value ="19" };
+
+<tens> = ten 				{ this.$value ="1" }
+               | twenty 	{ this.$value ="2" }
+               | thirty 	{ this.$value ="3" }
+               | forty 		{ this.$value ="4" }
+               | fifty 		{ this.$value ="5" }
+               | sixty 		{ this.$value ="6" }
+               | seventy 	{ this.$value ="7" }
+               | eighty 	{ this.$value ="8" }
+               | ninety 	{ this.$value ="9" };
+
+<tens20to90>    = twenty { this.$value ="2" }
+               | thirty { this.$value ="3" }
+               | forty { this.$value ="4" }
+               | fifty { this.$value ="5" }
+               | sixty { this.$value ="6" }
+               | seventy { this.$value ="7" }
+               | eighty { this.$value ="8" }
+               | ninety { this.$value ="9" };

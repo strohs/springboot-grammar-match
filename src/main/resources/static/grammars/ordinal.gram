@@ -1,0 +1,122 @@
+#JSGF V1.0;
+grammar ordinal;
+
+public <ordinal> = <onumbers1to99> {this.$value = $onumbers1to99.$value }
+        | <tenHundreds>  		{this.$value = $tenHundreds.$value }
+        | <thousands>    		{this.$value = $thousands.$value };
+
+<zeros> = (zero|oh|nil|ought) { this.$value = "0" };
+
+<ones_a> = <numbers1to9> { this.$value = $numbers1to9.$value }
+        | a            { this.$value = "1" };
+
+<teens> = eleven    { this.$value = "11" }
+       | twelve    { this.$value = "12" }
+       | thirteen  { this.$value = "13" }
+       | fourteen  { this.$value = "14" }
+       | fifteen   { this.$value = "15" }
+       | sixteen   { this.$value = "16" }
+       | seventeen { this.$value = "17" }
+       | eighteen  { this.$value = "18" }
+       | nineteen  { this.$value = "19" };
+
+<oteens> = eleventh   { this.$value ="11th" }
+       | twelfth     { this.$value ="12th" }
+       | thirteenth  { this.$value ="13th" }
+       | fourteenth  { this.$value ="14th" }
+       | fifteenth   { this.$value ="15th" }
+       | sixteenth   { this.$value ="16th" }
+       | seventeenth { this.$value ="17th" }
+       | eighteenth  { this.$value ="18th" }
+       | nineteenth  { this.$value ="19th" };
+
+<tens> = ten     { this.$value ="1" }
+      | twenty  { this.$value ="2" }
+      | thirty  { this.$value ="3" }
+      | forty   { this.$value ="4" }
+      | fifty   { this.$value ="5" }
+      | sixty   { this.$value ="6" }
+      | seventy { this.$value ="7" }
+      | eighty  { this.$value ="8" }
+      | ninety  { this.$value ="9" };
+
+<otens> = tenth     { this.$value ="10th" }
+      | twentieth  { this.$value ="20th" }
+      | thirtieth  { this.$value ="30th" }
+      | fortieth   { this.$value ="40th" }
+      | fiftieth   { this.$value ="50th" }
+      | sixtieth   { this.$value ="60th" }
+      | seventieth { this.$value ="70th" }
+      | eightieth  { this.$value ="80th" }
+      | ninetieth  { this.$value ="90th" };
+
+<tens20to90> = twenty  { this.$value ="2" }
+            | thirty  { this.$value ="3" }
+            | forty   { this.$value ="4" }
+            | fifty   { this.$value ="5" }
+            | sixty   { this.$value ="6" }
+            | seventy { this.$value ="7" }
+            | eighty  { this.$value ="8" }
+            | ninety  { this.$value ="9" };
+
+<onumbers1to99> = <tens20to90> <onumbers1to9> { this.$value = $tens20to90.$value + $onumbers1to9.$value }
+              | <otens>                    { this.$value = $otens.$value }
+              | <oteens>                   { this.$value = $oteens.$value }
+              | <onumbers1to9>            { this.$value = $onumbers1to9.$value };
+
+<numbers1to99> = <tens20to90> <numbers1to9> { this.$value = $tens20to90.$value + $numbers1to9.$value }
+              | <tens>                    { this.$value = $tens.$value + "0" }
+              | <teens>                   { this.$value = $teens.$value }
+              | <numbers1to9>             { this.$value = $numbers1to9.$value };
+
+<tdNum1to99> = <tens20to90> <numbers1to9> { this.$value = $tens20to90.$value + $numbers1to9.$value }
+            | <tens>                    { this.$value = $tens.$value + "0" }
+            | <teens>                   { this.$value = $teens.$value }
+            | <numbers1to9>             { this.$value = "0" + $numbers1to9.$value };
+
+<otdNum1to99> = <tens20to90> <onumbers1to9> { this.$value = $tens20to90.$value + $onumbers1to9.$value }
+            | <otens>                    { this.$value = $otens.$value  }
+            | <oteens>                   { this.$value = $oteens.$value }
+            | <onumbers1to9>             { this.$value = "0" + $onumbers1to9.$value };
+
+<tenHundreds> = <numbers1to99> hundred [and] <otdNum1to99>  { this.$value = $numbers1to99.$value + $otdNum1to99.$value }
+							| <numbers1to9> hundredth											{ this.$value = $numbers1to9.$value + "00th" };
+
+<hundreds> = <ones_a> hundred [and] <tdNum1to99> 						{ this.$value = $ones_a.$value + $tdNum1to99.$value }
+          | <ones_a> hundred                 								{ this.$value = $ones_a.$value + "00" }
+          | <numbers1to99>                     							{ this.$value = $numbers1to99.$value }
+          | a                                 							{ this.$value ="1" };
+
+<andNum001to999> = <numbers1to9> hundred [and] <tdNum1to99> { this.$value = $numbers1to9.$value + $tdNum1to99.$value }
+                | <numbers1to9> hundred                   	{ this.$value = $numbers1to9.$value + "00" }
+                | [and] <tdNum1to99>                      	{ this.$value = "0" + $tdNum1to99.$value };
+
+
+<oandNum001to999> = <numbers1to9> hundred [and] <otdNum1to99> { this.$value = $numbers1to9.$value + $otdNum1to99.$value }
+                | <numbers1to9> hundredth                   	{ this.$value = $numbers1to9.$value + "00th" }
+                | [and] <otdNum1to99>                      		{ this.$value = "0" + $otdNum1to99.$value };
+
+<andNum001to999b> = <andNum001to999> { this.$value = $andNum001to999.$value };
+
+<thousands> = <hundreds> thousandth                 { this.$value =	$hundreds.$value + "000th" }
+           | <hundreds> thousand <oandNum001to999> { this.$value =	$hundreds.$value + $oandNum001to999.$value };
+
+<numbers1to9> = one  { this.$value ="1" }
+             | two   { this.$value ="2" }
+             | three { this.$value ="3" }
+             | four  { this.$value ="4" }
+             | five  { this.$value ="5" }
+             | six   { this.$value ="6" }
+             | seven { this.$value ="7" }
+             | eight { this.$value ="8" }
+             | nine  { this.$value ="9" };
+
+<onumbers1to9> = first   { this.$value ="1st" }
+             | second   { this.$value ="2nd" }
+             | third    { this.$value ="3rd" }
+             | fourth   { this.$value ="4th" }
+             | fifth    { this.$value ="5th" }
+             | sixth    { this.$value ="6th" }
+             | seventh  { this.$value ="7th" }
+             | eighth   { this.$value ="8th" }
+             | ninth    { this.$value ="9th" };

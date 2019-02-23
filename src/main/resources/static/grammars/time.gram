@@ -1,0 +1,87 @@
+#JSGF V1.0;
+grammar time;
+
+//special chars like single quote or double quote should be removed before sending into this grammar
+
+public <time> = [at] <hr> <mi> <ampm> { this.$value = $hr.$value + $mi.$value + $ampm.$value }
+							| <specials_hr> 				{ this.$value = $specials_hr.$value };
+
+<hr> = <numbers01to12> { this.$value = $numbers01to12.$value };
+
+
+<mi> = oclock											{ this.$value = "00" }
+     | (oh | zero) <numbers1to9> 	{ this.$value = "0" + $numbers1to9.$value }
+     | <numbers01to59> 						{ this.$value = $numbers01to59.$value };
+
+<ampm> = ( "a. m." | "a m" | "a.m." | am | in the morning ) { this.$value = "am" }
+       | ( "p. m." | "p m" | "p.m." | pm | in the afternoon | in the evening | at night | tonight ) { this.$value = "pm" };
+
+<specials_hr> = [twelve] noon 		{ this.$value = "1200pm" }
+              | [twelve] midnight	{ this.$value = "1200am" }
+              | <hr> oclock 			{ this.$value = $hr.$value + "00" }
+              | <hr> <ampm> 			{ this.$value = $hr.$value + "00" + $ampm.$value };
+
+
+<numbers01to12> = <numbers1to9>	{ this.$value = "0" + $numbers1to9.$value }
+               | ten           	{ this.$value ="10" }
+               | eleven        	{ this.$value ="11" }
+               | twelve        	{ this.$value ="12" };
+
+<numbers13to24> = thirteen			{ this.$value ="13" }
+               | fourteen      	{ this.$value ="14" }
+               | fifteen       	{ this.$value ="15" }
+               | sixteen       	{ this.$value ="16" }
+               | seventeen     	{ this.$value ="17" }
+               | eighteen      	{ this.$value ="18" }
+               | nineteen      	{ this.$value ="19" }
+               | twenty        	{ this.$value ="20" }
+               | twenty one    	{ this.$value ="21" }
+               | twenty two    	{ this.$value ="22" }
+               | twenty three  	{ this.$value ="23" }
+               | twenty four   	{ this.$value ="24" };
+
+<numbers10to24> = ten           { this.$value ="10" }
+               | <teens>       	{ this.$value = $teens.$value }
+               | twenty        	{ this.$value ="20" }
+               | twenty one    	{ this.$value ="21" }
+               | twenty two    	{ this.$value ="22" }
+               | twenty three  	{ this.$value ="23" }
+               | twenty four   	{ this.$value ="24" };
+
+<numbers01to59> = (oh | zero) <numbers1to9>	{ this.$value = "0" + $numbers1to9.$value }
+               | ten                        { this.$value = "10" }
+               | <teens>                    { this.$value = $teens.$value }
+               | <tens20to50>               { this.$value = $tens20to50.$value + "0" }
+               | <tens20to50> <numbers1to9>	{ this.$value = $tens20to50.$value + $numbers1to9.$value };
+
+<numbers1to9> = one           	{ this.$value = "1" }
+               | <numbers2to9> 	{ this.$value = $numbers2to9.$value };
+
+<numbers2to9> = two  		{ this.$value ="2" }
+               | three 	{ this.$value ="3" }
+               | four  	{ this.$value ="4" }
+               | five  	{ this.$value ="5" }
+               | six   	{ this.$value ="6" }
+               | seven 	{ this.$value ="7" }
+               | eight 	{ this.$value ="8" }
+               | nine  	{ this.$value ="9" };
+
+<tdNum1to12> = [oh | zero] <numbers1to9> 	{ this.$value = "0" + $numbers1to9.$value }
+               | ten           						{ this.$value = "10" }
+               | eleven        						{ this.$value = "11" }
+               | twelve        						{ this.$value = "12" };
+
+<teens> = eleven    { this.$value ="11" }
+        | twelve    { this.$value ="12" }
+        | thirteen  { this.$value ="13" }
+        | fourteen  { this.$value ="14" }
+        | fifteen   { this.$value ="15" }
+        | sixteen   { this.$value ="16" }
+        | seventeen { this.$value ="17" }
+        | eighteen  { this.$value ="18" }
+        | nineteen  { this.$value ="19" };
+
+<tens20to50> = twenty { this.$value ="2" }
+             | thirty { this.$value ="3" }
+             | forty  { this.$value ="4" }
+             | fifty  { this.$value ="5" };

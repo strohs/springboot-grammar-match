@@ -1,3 +1,8 @@
+[![CircleCI](https://circleci.com/gh/strohs/springboot-grammar-match/tree/master.svg?style=svg)](https://circleci.com/gh/strohs/springboot-grammar-match/tree/master)
+
+[![codecov](https://codecov.io/gh/strohs/springboot-grammar-match/branch/master/graph/badge.svg)](https://codecov.io/gh/strohs/springboot-grammar-match)
+
+
 Spring Boot Grammar Matcher
 ===============================
 A Spring Boot REST application that takes a string of fully spelled out (in English) words, searches for: Dates,

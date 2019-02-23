@@ -3,12 +3,13 @@ version: 2 # use CircleCI 2.0
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
 
-    working_directory: ~/springboot-grammarmatch # directory where steps will run
+    working_directory: ~/repo # directory where steps will run
 
     docker: # run the steps with Docker
       - image: circleci/openjdk:8-jdk # ...with this image as the primary container; this is where all `steps` will run
     environment:
       JVM_OPTS: -Xmx3200m
+      TERM: dumb
 
     steps: # a collection of executable commands
 
@@ -16,19 +17,25 @@ jobs: # a collection of steps
 
       - restore_cache: # restore the saved cache after the first run or if `build.gradle` has changed
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: jars-{{ checksum "build.gradle" }}
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       #      - run:
       #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
       #         command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
-          command: ./gradlew --refresh-dependencies assemble
+          command: ./gradlew dependencies
 
       - save_cache: # saves the project dependencies
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run:
           name: Run Tests

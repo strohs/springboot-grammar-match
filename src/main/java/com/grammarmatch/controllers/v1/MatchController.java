@@ -1,7 +1,7 @@
-package com.cliff.grammarmatch.controllers.v1;
+package com.grammarmatch.controllers.v1;
 
-import com.cliff.grammarmatch.domain.MatchResult;
-import com.cliff.grammarmatch.services.MatcherService;
+import com.grammarmatch.domain.MatchResult;
+import com.grammarmatch.services.MatcherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

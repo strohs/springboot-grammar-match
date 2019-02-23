@@ -1,8 +1,8 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
-import com.cliff.grammarmatch.services.GrammarFormatter;
-import com.cliff.grammarmatch.services.GrammarFormatterService;
-import com.cliff.grammarmatch.services.GrammarType;
+import com.grammarmatch.services.GrammarFormatter;
+import com.grammarmatch.services.GrammarFormatterService;
+import com.grammarmatch.services.GrammarType;
 import org.junit.Before;
 import org.junit.Test;
 

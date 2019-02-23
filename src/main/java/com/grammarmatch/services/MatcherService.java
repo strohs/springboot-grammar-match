@@ -1,7 +1,7 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
 
-import com.cliff.grammarmatch.domain.MatchResult;
+import com.grammarmatch.domain.MatchResult;
 
 import javax.speech.recognition.GrammarException;
 

@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
 import javax.speech.EngineException;
 import javax.speech.recognition.GrammarException;

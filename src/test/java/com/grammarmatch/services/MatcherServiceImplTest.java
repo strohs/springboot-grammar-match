@@ -1,14 +1,11 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
-import com.cliff.grammarmatch.domain.MatchDetail;
-import com.cliff.grammarmatch.domain.MatchResult;
+import com.grammarmatch.domain.MatchDetail;
+import com.grammarmatch.domain.MatchResult;
+import com.grammarmatch.services.*;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import javax.speech.recognition.GrammarException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +14,6 @@ import java.util.Locale;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 public class MatcherServiceImplTest {
 
@@ -41,7 +37,7 @@ public class MatcherServiceImplTest {
 
 
 
-    private MatchDetail buildMatchDetail( GrammarType gt, String in, String out) {
+    private MatchDetail buildMatchDetail(GrammarType gt, String in, String out) {
         return MatchDetail.builder().grammarName(gt.grammarName()).input(in).output(out).build();
     }
 

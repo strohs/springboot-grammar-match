@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
 public interface GrammarFormatter {
 

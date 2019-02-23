@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch.domain;
+package com.grammarmatch.domain;
 
 import lombok.Builder;
 import lombok.Data;

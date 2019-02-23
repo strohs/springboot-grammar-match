@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
 import com.sun.speech.engine.recognition.BaseRecognizer;
 import edu.cmu.sphinx.tools.tags.ActionTagsParser;

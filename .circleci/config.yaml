@@ -1,0 +1,47 @@
+version: 2 # use CircleCI 2.0
+
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+
+    working_directory: ~/springboot-grammarmatch # directory where steps will run
+
+    docker: # run the steps with Docker
+      - image: circleci/openjdk:8-jdk # ...with this image as the primary container; this is where all `steps` will run
+    environment:
+      JVM_OPTS: -Xmx3200m
+
+    steps: # a collection of executable commands
+
+      - checkout # check out source code to working directory
+
+      - restore_cache: # restore the saved cache after the first run or if `build.gradle` has changed
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: jars-{{ checksum "build.gradle" }}
+
+      #      - run:
+      #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+      #         command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew --refresh-dependencies assemble
+
+      - save_cache: # saves the project dependencies
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}
+
+      - run:
+          name: Run Tests
+          command: ./gradlew test jacocoTestReport # run the actual tests
+
+      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard. 
+          # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: build/reports/jacoco/test
+
+      - store_artifacts: # store the uberjar as an artifact
+          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: build/libs/grammar-match-0.0.1.jar
+      # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+#      - run:
+#          name: Send to CodeCov
+#          command: bash <(curl -s https://codecov.io/bash)

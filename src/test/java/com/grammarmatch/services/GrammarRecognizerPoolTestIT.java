@@ -1,5 +1,7 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
+import com.grammarmatch.services.GrammarRecognizer;
+import com.grammarmatch.services.GrammarRecognizerPool;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

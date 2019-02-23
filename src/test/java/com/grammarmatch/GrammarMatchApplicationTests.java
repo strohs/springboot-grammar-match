@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch;
+package com.grammarmatch;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

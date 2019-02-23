@@ -1,4 +1,4 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
 import java.util.Arrays;
 import java.util.List;

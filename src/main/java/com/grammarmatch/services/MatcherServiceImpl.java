@@ -1,7 +1,7 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
-import com.cliff.grammarmatch.domain.MatchDetail;
-import com.cliff.grammarmatch.domain.MatchResult;
+import com.grammarmatch.domain.MatchDetail;
+import com.grammarmatch.domain.MatchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

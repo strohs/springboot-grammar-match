@@ -1,5 +1,6 @@
-package com.cliff.grammarmatch.services;
+package com.grammarmatch.services;
 
+import com.grammarmatch.services.GrammarUtils;
 import org.junit.Test;
 
 import java.util.List;

@@ -119,11 +119,4 @@ public class GrammarMatcherServiceImpl implements MatcherService {
         return Optional.empty();
     }
 
-    private MatchDetail buildMatchDetail(GrammarType gramType, String orig, String res ) {
-        return MatchDetail.builder()
-                .input(orig)
-                .output(res)
-                .grammarName( gramType.grammarName() )
-                .build();
-    }
 }

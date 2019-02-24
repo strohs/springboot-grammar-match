@@ -1,8 +1,5 @@
 package com.grammarmatch.services;
 
-import com.grammarmatch.services.GrammarFormatter;
-import com.grammarmatch.services.GrammarFormatterService;
-import com.grammarmatch.services.GrammarType;
 import org.junit.Before;
 import org.junit.Test;
 

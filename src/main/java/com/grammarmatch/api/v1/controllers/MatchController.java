@@ -1,4 +1,4 @@
-package com.grammarmatch.controllers.v1;
+package com.grammarmatch.api.v1.controllers;
 
 import com.grammarmatch.domain.MatchResult;
 import com.grammarmatch.services.MatcherService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping( MatchController.BASE_URL )
 public class MatchController {
 
-    public static final String BASE_URL = "api/v1";
+    public static final String BASE_URL = "/api/v1";
     private MatcherService matcher;
 
     public MatchController(MatcherService matcher) {

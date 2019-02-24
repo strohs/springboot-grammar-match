@@ -5,7 +5,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
-
+apply plugin: 'idea'
 
 
 group = 'com.grammarmatch'
@@ -36,6 +36,13 @@ dependencies {
 // implementation       - (supersedes compile) — used for compilation and runtime
 // testImplementation   - test equivalent of implementation
 // compileOnly          - for deps that are necessary to compile your code but shouldn’t be part of the runtime classpath
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
 jacocoTestReport {
     reports {

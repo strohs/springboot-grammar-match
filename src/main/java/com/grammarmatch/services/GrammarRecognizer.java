@@ -1,10 +1,5 @@
 package com.grammarmatch.services;
 
-import javax.speech.EngineException;
-import javax.speech.recognition.GrammarException;
-import javax.speech.recognition.Recognizer;
-import java.io.IOException;
-
 /**
  * A JSAPI {@code javax.speech.recognition.Recognizer} that can be used to match text against a speech grammar file.
  */
@@ -30,7 +25,6 @@ public interface GrammarRecognizer {
      * @param utterance - a space separated String of words to match against
      * @return a string containing the result of the grammar if the utterence matched, else the "NOMATCH" string
      * will be returned, indicating the utterance did not match the specified grammar
-     * @throws GrammarException - if in error occurs while trying to match the utterance against the grammar
      */
     String match(String grammarName, String utterance);
 

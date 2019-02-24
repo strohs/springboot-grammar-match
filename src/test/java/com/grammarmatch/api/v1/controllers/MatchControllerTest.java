@@ -1,6 +1,5 @@
 package com.grammarmatch.api.v1.controllers;
 
-import com.grammarmatch.api.v1.controllers.MatchController;
 import com.grammarmatch.domain.MatchDetail;
 import com.grammarmatch.domain.MatchResult;
 import com.grammarmatch.services.GrammarType;

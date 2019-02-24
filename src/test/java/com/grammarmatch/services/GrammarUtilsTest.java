@@ -1,12 +1,11 @@
 package com.grammarmatch.services;
 
-import com.grammarmatch.services.GrammarUtils;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class GrammarUtilsTest {
 

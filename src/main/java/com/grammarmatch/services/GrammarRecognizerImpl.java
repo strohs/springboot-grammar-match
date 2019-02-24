@@ -84,7 +84,7 @@ public class GrammarRecognizerImpl implements GrammarRecognizer {
             grammar.setEnabled(false);
             recognizer.commitChanges();
         } catch (GrammarException e) {
-            log.error("could not match against grammar file: {}", e.getMessage() );
+            log.error("exception during grammar match. Exception is {} ::: grammar file={} utt={}", e.getMessage() ,grammarName, utterance );
         }
         return out;
     }

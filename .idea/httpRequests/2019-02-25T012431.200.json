@@ -1,0 +1,26 @@
+{
+  "original": "today is february nineteenth two thousand nineteen and the time is eight thirty four p.m. you are number fifty four in line and you are due about two hundred fifty four dollars and ninety two cents",
+  "result": "today is Feb 19, 2019 and the time is 8:34 PM you are number 54 in line and you are due about $254.92",
+  "matchDetails": [
+    {
+      "grammarName": "currency",
+      "input": "two hundred fifty four dollars and ninety two cents",
+      "output": "$254.92"
+    },
+    {
+      "grammarName": "date",
+      "input": "february nineteenth two thousand nineteen",
+      "output": "Feb 19, 2019"
+    },
+    {
+      "grammarName": "time",
+      "input": "eight thirty four p.m.",
+      "output": "8:34 PM"
+    },
+    {
+      "grammarName": "number",
+      "input": "fifty four",
+      "output": "54"
+    }
+  ]
+}

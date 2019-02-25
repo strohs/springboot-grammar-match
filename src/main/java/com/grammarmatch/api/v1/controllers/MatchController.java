@@ -2,13 +2,15 @@ package com.grammarmatch.api.v1.controllers;
 
 import com.grammarmatch.domain.MatchResult;
 import com.grammarmatch.services.MatcherService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
+import java.time.Instant;
 
 @RestController
 @RequestMapping( MatchController.BASE_URL )
+@Slf4j
 public class MatchController {
 
     public static final String BASE_URL = "/api/v1";
@@ -19,7 +21,7 @@ public class MatchController {
     }
 
     @GetMapping("/match/{inStr}")
-    public MatchResult match( @PathVariable String inStr ) {
+    public MatchResult matchGet(@PathVariable String inStr ) {
         return matcher.match( inStr );
 //        try {
 //
@@ -28,4 +30,11 @@ public class MatchController {
 //        }
 
     }
+
+    @PostMapping("/match")
+    public MatchResult matchPost(@RequestBody String inStr ) {
+        return matcher.match( inStr );
+    }
+
+
 }

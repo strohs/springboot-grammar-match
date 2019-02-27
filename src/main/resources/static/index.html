@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+This is a single page Vue.js application consisting of a single HTML form.
+-->
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta charset="UTF-8" name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>JSGF Grammar Match</title>
+</head>
+<body>
+<div id="app">
+
+    <v-app>
+        <v-toolbar app>
+            <v-toolbar-title class="headline text-uppercase">
+                <span>JSGF Grammar Match</span>
+            </v-toolbar-title>
+        </v-toolbar>
+
+        <v-content>
+            <v-container>
+                <v-layout column justify-start>
+                    <v-flex xs12>
+                        <v-form v-model="valid" ref="textForm">
+                            <v-text-field
+                                    v-model="text"
+                                    :rules="textRules"
+                                    label="Text"
+                                    placeholder="enter words here"
+                                    prepend-icon="create"
+                                    full-width
+                                    outline
+                                    required
+                            ></v-text-field>
+                            <v-btn
+                                    :disabled="!valid"
+                                    color="primary"
+                                    class="ml-5"
+                                    large
+                                    @click="submit"
+                            >
+                                <v-icon left>send</v-icon>
+                                Match
+                            </v-btn>
+                        </v-form>
+                    </v-flex>
+                    <v-flex xs12 my-5>
+                        <div>
+                            <v-icon class="mr-5">mood</v-icon>
+                            <span class="display-1" v-html="result"></span>
+                        </div>
+
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                apiUrl: 'http://localhost:8080/api/v1/match',
+                text: '',
+                valid: true,
+                textRules: [
+                    v => !!v || 'Text is required',
+                    v => /^[A-Za-z ]+$/.test(v) || 'Text must only contain characters a-z and spaces'
+                ],
+                matchResp: {},
+                result: ''
+            }
+        },
+        methods: {
+            submit() {
+                if (this.$refs.textForm.validate()) {
+                    console.log('submitting ', this.text)
+                    axios.post(this.apiUrl, this.text, {headers: {"Content-Type": "text/plain"}})
+                        .then(res => {
+                            this.matchResp = res.data
+                            this.highlightResults(res.data.original, res.data.matchDetails)
+                        })
+                        .catch(err => {
+                            console.log('error', err)
+                            throw err
+                        })
+
+                }
+            },
+            // buildChip (result,original) {
+            //     return `<span><v-tootip top><template #activator="data"><v-chip v-on="data.on">${result}</v-chip></template><span>${original}</span></v-tootip></span>`
+            // },
+            highlightResults(original, matchDetails) {
+                this.result = original
+                for (const md of matchDetails) {
+                    this.result = this.result.replace(md.input, `<strong class="green--text text--lighten-1">${md.output}</strong>`)
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
